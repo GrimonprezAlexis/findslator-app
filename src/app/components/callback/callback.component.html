@@ -1,0 +1,21 @@
+<ng-container *ngIf="error$ | async as error; else noError">
+    <div class="container">
+      <h1 id="page-title" class="content__title">Error</h1>
+      <div class="content__body">
+        <p id="page-description">
+          <span>{{ error.message }}</span>
+        </p>
+      </div>
+    </div>
+</ng-container>
+
+<ng-template #noError>
+  <div class="container">
+    <app-menu />
+    
+    <!-- <app-mobile-nav-bar></app-mobile-nav-bar> -->
+    <div class="page-layout__content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>

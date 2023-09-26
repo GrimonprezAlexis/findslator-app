@@ -1,0 +1,56 @@
+<header class="nav-bar__container">
+  <div class="nav-bar-brand">
+    <span>Findslator</span>
+  </div>
+
+  <nav class="nav-bar__tabs" aria-label="Site menu" role="navigation">
+      <ng-template #loggedOut>
+      <ul>
+        <li><a 
+          routerlinkactive="router-link-active" 
+          [routerLink]="['/#fonctionnement']"
+        ><i class="fa-brands fa-windows"></i> Fonctionnement</a></li>
+          
+        <li><a 
+          routerlinkactive="router-link-active" 
+          [routerLink]="['/#services']"
+        ><i class="fa-brands fa-windows"></i> Nos services</a></li>
+          
+        <li><a 
+          routerlinkactive="router-link-active" 
+          [routerLink]="['/#contact']"
+        ><i class="fa-brands fa-windows"></i> Contactez</a></li>
+              
+        <button 
+          class="button__login btn-outline-white" 
+          (click)="handleLogin('both')"
+        ><i class="fa-regular fa-user"></i> Connexion</button> 
+      </ul>   
+      </ng-template>
+
+      <ng-container *ngIf="isAuthenticated$ | async; else loggedOut">
+        <ul>
+        <li><a 
+          routerlinkactive="router-link-active" 
+          [routerLink]="['/']"
+        ><i class="fa-regular fa-language"></i> Chercher des traducteurs
+        </a></li>
+
+         <li><a 
+          routerLinkActive="router-link-active" 
+          [routerLink]="['/profile']"
+          ><i class="fa-regular fa-user"></i> Profile</a></li>
+
+          <li><a 
+           routerLinkActive="router-link-active" 
+           [routerLink]="['/admin']"
+          ><i class="fa-regular fa-user"></i> Admin</a></li>
+
+          <button 
+            class="button__logout" 
+            (click)="handleLogout()"
+          ><i class="fa-regular fa-right-from-bracket"></i> Log Out</button>
+        </ul>
+      </ng-container>
+  </nav>
+</header>
