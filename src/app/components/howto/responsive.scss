@@ -1,0 +1,76 @@
+@media screen and (min-width: 320px) and (max-width:992px){
+
+}
+@media screen and (min-width: 320px) and (max-width:767px){
+    #stepsBlock {
+        margin: 0 auto;
+    }
+    .wrapper__steps {
+        flex-direction: column;
+        padding: 2rem 1rem;
+
+        &__left {
+            width: 100%;
+            padding: 2rem;
+            text-align: center;
+            position: static;
+        }
+
+        &__info {
+            h2 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    }
+    .steps__left__list {
+
+        li {
+            font-size: 14px;            
+        }
+    }
+    .wrapper__steps__right {
+        width: 100%;
+    }
+    .step-card__body {
+        h3 {
+            font-size: 22px;
+        }
+        p {
+            font-size: 14px;
+        }
+    }
+
+}
+
+@media screen and (min-width: 450px) and (max-width:992px){
+    .wrapper__steps {
+
+        &__info {
+            h2 {
+                font-size: 26px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    }
+    .step-card__body {
+        h3 {
+            font-size: 26px;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+    .badge {
+        margin-top: 2rem;
+        display: flex;
+    }
+}
+@media screen and (min-width: 992px){}
+@media screen and (min-width: 1290px){}

@@ -1,14 +1,4 @@
 /*--------------------------------------------------------------
-# RESPONSIVE
---------------------------------------------------------------*/
-@media screen and (min-width: 320px) and (max-width:992px){}
-@media screen and (min-width: 320px) and (max-width:767px){}
-@media screen and (min-width: 450px) and (max-width:992px){}
-@media screen and (min-width: 992px){}
-@media screen and (min-width: 1290px){}
-
-
-/*--------------------------------------------------------------
 # GENERALE
 --------------------------------------------------------------*/
 * {
@@ -302,3 +292,21 @@ button {
 }
 
 @import './styles/layout.scss';
+
+/*--------------------------------------------------------------
+# RESPONSIVE
+--------------------------------------------------------------*/
+@media screen and (min-width: 320px) and (max-width:992px){
+}
+@media screen and (min-width: 320px) and (max-width:767px){
+  h1, h2, h3, h4 {
+    font-size: 22px;
+  }
+  p, span, a {
+      font-size: 14px;
+  }
+}
+@media screen and (min-width: 450px) and (max-width:992px){
+}
+@media screen and (min-width: 992px){}
+@media screen and (min-width: 1290px){}
