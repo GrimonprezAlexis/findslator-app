@@ -8,6 +8,16 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProfileEditComponent implements OnInit {
   userForm!: FormGroup;
+  currentStep: number = 1;
+
+  steps: string[] = [
+    'Informations personnelles',
+    'Informations professionnelles',
+    'Cursus académique',
+    'Expérience professionnelle',
+    'Documents requis',
+    'Confirmation des informations',
+  ];
 
   constructor(private fb: FormBuilder) {}
 
@@ -67,6 +77,10 @@ export class ProfileEditComponent implements OnInit {
     //this.addPrice();
     //this.addExperience();
     //this.addDocument();
+  }
+
+  nextStep(step: number) {
+    this.currentStep = step;
   }
 
   get pricingControls() {

@@ -5,13 +5,14 @@
         <button type="button" class="close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h2 class="modal-title" *ngIf="modalData.title">{{ modalData.title }}</h2>
       </div>
       <div class="modal-body">
-        <ng-container *ngIf="content">
-          <ng-container *ngComponentOutlet="content"></ng-container>
+        <ng-container *ngIf="modalData.component">
+          <ng-container *ngComponentOutlet="modalData.component"></ng-container>
         </ng-container>
       </div>
     </div>
   </div>
-  <div class="modal-background" (click)="closeModal()"></div>
+  <!-- <div class="modal-background" (click)="closeModal()"></div> -->
 </div>

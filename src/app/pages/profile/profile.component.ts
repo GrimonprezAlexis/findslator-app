@@ -21,14 +21,6 @@ export class ProfilePageComponent implements OnInit {
   successMessage!: string;
   errorMessage!: string;
 
-  openModal() {}
-
-  // openModal() {
-  //   this.modalOpen = true;
-  //   this.dynamicComponent =
-  //     this._resolver.resolveComponentFactory(ExploreComponent);
-  // }
-
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
@@ -86,10 +78,10 @@ export class ProfilePageComponent implements OnInit {
   public modal$ = this.modalService.modal$;
 
   openExplorerInModal() {
-    this.modalService.openModal(ExploreComponent);
+    this.modalService.openModal(ExploreComponent, 'Explorer les tradcteurs');
   }
 
-  openProfileInModal() {
-    this.modalService.openModal(ProfileEditComponent);
+  openProfileInModal(title: string) {
+    this.modalService.openModal(ProfileEditComponent, title);
   }
 }

@@ -8,8 +8,8 @@ export class ModalService {
   private modalSubject = new BehaviorSubject<any>(null);
   public modal$: Observable<any> = this.modalSubject.asObservable();
 
-  openModal(component: any) {
-    this.modalSubject.next(component);
+  openModal(component: any, title?: string) {
+    this.modalSubject.next({ component, title });
   }
 
   closeModal() {

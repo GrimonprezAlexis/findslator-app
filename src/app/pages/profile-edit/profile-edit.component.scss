@@ -1,66 +1,142 @@
+/* Styles for the container */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+  padding: 20px;
+}
+
+.breadcrumb {
+  background-color: #f8f9fa;
+  padding: 8px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+
+  &-item {
+    display: inline-block;
+    margin-right: 5px;
+
+    &.active {
+      color: #28a745;
+    }
   
-  /* Form Styles */
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  .input-group {
-    margin-bottom: 1rem;
-  }
-  
-  .input-group-prepend {
-    .input-group-text {
-      background-color: #f0f0f0;
+    li {
+      color: #007bff;
+      text-decoration: none;
     }
   }
-  
-  /* Buttons */
-  
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-  
-  /* Input Styles */
-  
-  .form-control {
-    border: 1px solid #ced4da;
-    border-radius: 0;
-  }
-  
-  /* Textarea Styles */
-  
-  .form-control.textarea {
-    height: 150px;
-  }
-  
-  /* Dropdown Styles */
-  
-  .form-control.select {
-    appearance: none;
-  }
-  
-  /* Optional: Add more styles as needed */
-  
-  /* Responsive Design */
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 10px;
+}
+
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '>';
+  margin: 0 5px;
+  color: #6c757d;
+}
+
+/* List item marker styles */
+ul {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+
+  li {
+    counter-increment: my-awesome-counter;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+
+    &:before {
+      content: counter(my-awesome-counter) ".";
+      font-weight: bold;
+      color: #007bff; /* Marker color */
+      margin-right: 10px;
     }
   }
+}
+
+
+.wrapper-form {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h2 {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+/* Form group styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Input styles */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Textarea styles */
+textarea.form-control {
+  resize: vertical;
+}
+
+/* Button styles */
+.btn {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+
+.custom-checkbox {
+  margin-bottom: 10px;
+}
+
+.custom-checkbox input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.custom-checkbox input:checked {
+  background-color: #007bff;
+}
+
+.custom-checkbox input:focus {
+  outline: none;
+}
+
+.custom-checkbox label {
+  font-size: 16px;
+}

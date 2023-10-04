@@ -36,6 +36,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row-reverse;
+  border-bottom: 1px solid #e9ecef;
 }
 
 .close {
@@ -44,11 +46,13 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: #000;
+  z-index: 901;
 }
 
 .modal-body {
-  max-height: 100vh; /* Adjust as needed */
+  max-height: max-content;
   overflow-y: auto;
+  border-bottom: 1px solid #e9ecef;
 }
 
 /* Add more styles as needed */

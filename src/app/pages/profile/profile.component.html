@@ -2,7 +2,7 @@
 <app-alert *ngIf="errorMessage" type="error" [message]="errorMessage"></app-alert>
 
 <ng-container *ngIf="modal$ | async as modalComponent">
-  <app-modal-generic [content]="modalComponent"></app-modal-generic>
+  <app-modal-generic />
 </ng-container>
 
 <app-private-layout>
@@ -41,27 +41,19 @@
         <div class="container auth0-features">
           <h2 class="auth0-features__title">Explorer vos fonctionnalités</h2>
 
-           <div>
-              <button type="button" (click)="openExplorerInModal()">Edit Profile</button>
-            </div>
-  
-
-            <div>
-              <button type="button" (click)="openProfileInModal()">Explorer Offert</button>
-            </div>
-  
-
           <div class="auth0-features__grid">
             <app-user-feature
               title="Gérer mes offres"
               description="Créez des missions de traduction en spécifiant la langue et le type de traduction. Les traducteurs peuvent parcourir et répondre en exprimant leur intérêt ou en les acceptant."
               icon="https://cdn.auth0.com/blog/hello-auth0/advanced-protection-logo.svg"
+              (click)="openExplorerInModal()"
             ></app-user-feature>
 
             <app-user-feature
               title="Profil & Espaces"
               description="Modifier mon profil, accéder à mes avis, ajouter des détails, sur votre expérience, vos spécialisations et même votre photo de profil."
               icon="https://cdn.auth0.com/blog/hello-auth0/identity-providers-logo.svg"
+              (click)="openProfileInModal('Profil & Espaces')"
               ></app-user-feature>
   
             <app-user-feature

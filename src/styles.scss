@@ -235,6 +235,9 @@ code {
   .mt-#{$i} {
     margin-top:  #{$i}rem;
   }
+  .mb-#{$i} {
+    margin-bottom:  #{$i}rem;
+  }
 }
 
 .disabled {
