@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import axios, { AxiosRequestConfig } from 'axios';
 import { catchError, mergeMap, Observable, of } from 'rxjs';
-import { ApiResponseModel, AppErrorModel, RequestConfigModel } from '../models';
+import {
+  ApiResponseModel,
+  AppErrorModel,
+  RequestConfigModel,
+} from '../models/index';
 
 @Injectable({
   providedIn: 'root',

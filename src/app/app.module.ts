@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { CookieService } from 'ngx-cookie-service';
 
 import { environment as env } from '../environnements/environnement';
 
@@ -80,6 +81,7 @@ import { ModalGenericComponent } from './components/modal-generic/modal-generic.
   ],
   providers: [
     ModalService,
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,

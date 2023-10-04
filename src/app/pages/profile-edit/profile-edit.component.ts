@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/_core/services';
+import { UserAuth, UserProfile } from 'src/app/_core/types';
 
 @Component({
   selector: 'app-profile-edit',
@@ -9,6 +11,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProfileEditComponent implements OnInit {
   userForm!: FormGroup;
   currentStep: number = 1;
+  user!: UserAuth<UserProfile>;
 
   steps: string[] = [
     'Informations personnelles',
@@ -19,9 +22,12 @@ export class ProfileEditComponent implements OnInit {
     'Confirmation des informations',
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private _userService: UserService) {}
 
   ngOnInit() {
+    this.user = this._userService.getUser();
+    console.log('>> user from profile edit', this.user);
+
     this.userForm = this.fb.group({
       // ... Informations personnel ...
       lastName: ['', Validators.required],
@@ -171,5 +177,29 @@ export class ProfileEditComponent implements OnInit {
       // Traitement des données du formulaire
       console.log(this.userForm.value);
     }
+  }
+
+  private AddUserInfo() {
+    //Add Form info and update the user by _id from this.user._id
+    // return this._userService.getUser('email', response?.email).pipe(
+    //   catchError((error) => {
+    //     console.error('Error:', error);
+    //     const newUser: UserAuth<undefined> = {
+    //       roles: [this.userRole],
+    //       email: response?.email,
+    //       picture: response?.picture,
+    //       auth0Id: response?.sub,
+    //       updated_at:
+    //         response?.updated_at || this._helperService.getCurrentISODate(),
+    //     };
+    //     return this._userService
+    //       .createUser(newUser)
+    //       .pipe(
+    //         switchMap((response) =>
+    //           this._userService.getUser('id', response.insertedId)
+    //         )
+    //       );
+    //   })
+    // );
   }
 }

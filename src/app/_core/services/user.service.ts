@@ -4,6 +4,7 @@ import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environnements/environnement';
 import { UserAuth, UserProfile } from '../types/user.type';
 import { PostUserResponse, UserApiResponse } from '../types/api.type';
+import { CookieService } from 'ngx-cookie-service';
 
 const baseUrl = `${environment.api.serverUrl}/api`;
 
@@ -11,9 +12,24 @@ const baseUrl = `${environment.api.serverUrl}/api`;
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  getUser(
+  private readonly USER_COOKIE_KEY = 'user_data';
+
+  setUser(user: any): void {
+    this.cookieService.set(this.USER_COOKIE_KEY, JSON.stringify(user));
+  }
+
+  getUser(): any {
+    const userCookie = this.cookieService.get(this.USER_COOKIE_KEY);
+    return userCookie ? JSON.parse(userCookie) : null;
+  }
+
+  clearUser(): void {
+    this.cookieService.delete(this.USER_COOKIE_KEY);
+  }
+
+  getUserByQuery(
     queryType: 'id' | 'email' | 'auth0Id',
     value: string | undefined
   ): Observable<UserAuth<UserProfile>> {
@@ -53,6 +69,21 @@ export class UserService {
         map((response) => response.user),
         catchError((error) => {
           console.error('Error during user creation:', error);
+          throw error;
+        })
+      );
+  }
+
+  updateUser(user: UserAuth<UserProfile>): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post<UserApiResponse<any>>(`${baseUrl}/user/update`, user, {
+        headers,
+      })
+      .pipe(
+        map((response) => response.user),
+        catchError((error) => {
+          console.error('Error during user update:', error);
           throw error;
         })
       );

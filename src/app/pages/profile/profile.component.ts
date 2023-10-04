@@ -39,7 +39,10 @@ export class ProfilePageComponent implements OnInit {
         next: (user: UserAuth<UserProfile>) => {
           this.successMessage = `Welcome ${user.email}`;
           this.user = user;
-          console.log('>>', this.user);
+
+          console.log('>> profileComponent', this.user);
+          //Store in cache the user to use inside another component
+          this._userService.setUser(user);
         },
         error: (error) => {
           console.error('Error creating user:', error);
@@ -49,7 +52,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   private checkAndCreateUser(response: User | null | undefined) {
-    return this._userService.getUser('email', response?.email).pipe(
+    return this._userService.getUserByQuery('email', response?.email).pipe(
       catchError((error) => {
         console.error('Error:', error);
         const newUser: UserAuth<undefined> = {
@@ -64,7 +67,7 @@ export class ProfilePageComponent implements OnInit {
           .createUser(newUser)
           .pipe(
             switchMap((response) =>
-              this._userService.getUser('id', response.insertedId)
+              this._userService.getUserByQuery('id', response.insertedId)
             )
           );
       })
