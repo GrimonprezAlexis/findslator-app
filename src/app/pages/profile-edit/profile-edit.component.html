@@ -1,0 +1,399 @@
+<div class="container mt-4">
+  <h2>Informations personnelles</h2>
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="title">Nom</label>
+      <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Nom en majuscule">
+    </div>
+
+    <!-- Prénoms -->
+    <div class="form-group">
+      <label for="title">Prénoms</label>
+      <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Initiales en majuscule">
+    </div>
+
+    <!-- Photo/logo -->
+    <div class="form-group">
+      <label for="title">Photo/logo</label>
+      <input type="file" class="form-control" id="photo" formControlName="photo">
+    </div>
+
+
+    <!-- E-mail -->
+    <div class="form-group">
+      <label for="title">E-mail</label>
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="adresse e-mail">
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="form-group">
+      <label for="title">Mot de passe</label>
+      <input type="password" class="form-control" id="password" formControlName="password" placeholder="8 caractères minimum avec Majuscule">
+    </div>
+
+    <!-- Sexe -->
+    <div class="form-group">
+      <label for="gender">Sexe</label>
+      <select class="form-control" id="gender" formControlName="gender">
+        <option value="male">Homme</option>
+        <option value="female">Femme</option>
+        <option value="other">Autre</option>
+      </select>
+    </div>
+
+    <!-- Nationalités -->
+    <div class="form-group">
+      <label for="nationality">Nationalités</label>
+      <select class="form-control" id="nationality" formControlName="nationality">
+        <option value="nationality1">Nationalité 1</option>
+        <option value="nationality2">Nationalité 2</option>
+        <!-- Ajoutez d'autres options au besoin -->
+      </select>
+    </div>
+
+    <!-- Pays de résidence -->
+    <div class="form-group">
+      <label for="countryOfResidence">Pays de résidence</label>
+      <select class="form-control" id="countryOfResidence" formControlName="countryOfResidence">
+        <option value="country1">Pays 1</option>
+        <option value="country2">Pays 2</option>
+        <!-- Ajoutez d'autres options au besoin -->
+      </select>
+    </div>
+
+    <!-- Ville -->
+    <div class="form-group">
+      <label for="title">Ville</label>
+      <input type="text" class="form-control" id="city" formControlName="city" placeholder="Zone de texte">
+    </div>
+    
+    <!-- Compte LinkedIn -->
+    <div class="form-group">
+      <label for="title">Compte LinkedIn</label>
+      <input type="text" class="form-control" id="linkedin" formControlName="linkedin" placeholder="Lien vers profil LinkedIn">
+    </div>
+
+    <!-- Site Internet -->
+    <div class="form-group">
+      <label for="title">Site Internet</label>
+      <input type="text" class="form-control" id="website" formControlName="website" placeholder="URL du site">
+    </div>
+
+    <!-- Biographie -->
+    <div class="form-group">
+      <label for="bio">Biographie</label>
+      <textarea class="form-control" id="bio" formControlName="bio" rows="4" placeholder="Zone de texte permettant à l'utilisateur de renseigner sa biographie ou un petit texte d'accroche"></textarea>
+    </div>
+
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+
+    <h2>Informations professionnelles</h2>
+    
+    <!-- Services -->
+    <div class="form-group">
+      <label for="services">Services</label>
+      <textarea class="form-control" id="services" formControlName="services" rows="4" placeholder="Zone de texte"></textarea>
+    </div>
+    
+    <!-- Statut -->
+    <div class="form-group">
+      <label for="status">Statut</label>
+      <select class="form-control" id="status" formControlName="status">
+        <option value="independent">Indépendant</option>
+        <option value="company">Entreprise</option>
+      </select>
+    </div>
+    
+    <!-- Taille de l'entreprise (si applicable) -->
+    <div *ngIf="userForm.get('status')?.value === 'company'" class="form-group">
+      <label for="companySize">Taille de l'entreprise</label>
+      <select class="form-control" id="companySize" formControlName="companySize">
+        <option value="0-5 employees">0-5 employés</option>
+        <option value="5-10 employees">5-10 employés</option>
+        <option value="10-25 employees">10-25 employés</option>
+        <option value="25-50 employees">25-50 employés</option>
+        <option value="50+ employees">Plus de 50 employés</option>
+      </select>
+    </div>
+    
+    <!-- Langue maternelle -->
+    <div class="form-group">
+      <label for="nativeLanguage">Langue maternelle</label>
+      <select class="form-control" id="nativeLanguage" formControlName="nativeLanguage" multiple>
+        <option value="langue1">Langue 1</option>
+        <option value="langue2">Langue 2</option>
+        <!-- Ajoutez d'autres options au besoin -->
+      </select>
+    </div>
+    
+    <!-- Langues de travail -->
+    <div class="form-group">
+      <label for="workingLanguages">Langues de travail</label>
+      <select class="form-control" id="workingLanguages" formControlName="workingLanguages" multiple>
+        <option value="langue1">Langue 1</option>
+        <option value="langue2">Langue 2</option>
+        <!-- Ajoutez d'autres options au besoin -->
+      </select>
+    </div>
+    
+    <!-- En activité depuis -->
+    <div class="form-group">
+      <label for="title">En activité depuis (année)</label>
+      <input type="number" class="form-control" id="experienceYear" formControlName="experienceYear">
+    </div>
+    
+    <!-- Spécialisations -->
+    <div class="form-group">
+      <label for="specializations">Spécialisations</label>
+      <textarea class="form-control" id="specializations" formControlName="specializations" rows="4" placeholder="Zone de texte"></textarea>
+    </div>
+    
+    <!-- Outils de TAO -->
+    <div class="form-group">
+      <label for="translationTools">Outils de TAO</label>
+      <select class="form-control" id="translationTools" formControlName="translationTools">
+        <option value="true">Oui</option>
+        <option value="false">Non</option>
+      </select>
+    </div>
+    
+    <!-- Si Oui, préciser -->
+    <div *ngIf="userForm.get('translationTools')?.value === 'true'" class="form-group">
+      <label for="translationToolsDetails">Préciser les outils de TAO</label>
+      <textarea class="form-control" id="translationToolsDetails" formControlName="translationToolsDetails" rows="4" placeholder="Zone de texte"></textarea>
+    </div>
+    
+    <!-- Tarifs -->
+    <div class="form-group">
+      <label for="pricing">Tarifs</label>
+      <div formArrayName="pricing">
+        <div *ngFor="let price of pricingControls; let i = index" class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Service</span>
+          </div>
+          <select class="form-control" [formControlName]="i">
+            <option value="service1">Service 1</option>
+            <option value="service2">Service 2</option>
+            <!-- Ajoutez d'autres options au besoin -->
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Unité</span>
+          </div>
+          <select class="form-control" [formControlName]="i">
+            <option value="source word">Mot source</option>
+            <option value="target word">Mot cible</option>
+            <option value="hour">Heure</option>
+            <option value="page">Page</option>
+            <option value="day">Jour</option>
+          </select>
+          <input type="number" class="form-control" [formControlName]="i">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Devise</span>
+          </div>
+          <select class="form-control" [formControlName]="i">
+            <option value="currency1">Devise 1</option>
+            <option value="currency2">Devise 2</option>
+            <!-- Ajoutez d'autres options au besoin -->
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Tarif minimum</span>
+          </div>
+          <input type="number" class="form-control" [formControlName]="i">
+          <div class="input-group-append">
+            <button class="btn btn-danger" (click)="removePrice(i)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-success" (click)="addPrice()">Ajouter un tarif</button>
+    </div>
+
+
+
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+
+    <!-- Cursus académique -->
+    <h2>Cursus académique</h2>
+
+    <!-- Formation diplomante/certifiante -->
+    <div class="form-group">
+      <label for="diploma">Formation diplomante/certifiante</label>
+      <select class="form-control" id="diploma" formControlName="diploma">
+        <option value="true">Oui</option>
+        <option value="false">Non</option>
+      </select>
+    </div>
+
+    <!-- Si oui, préciser -->
+    <div *ngIf="userForm.get('diploma')?.value === 'true'" class="form-group">
+      <label for="diplomaDetails">Si oui, préciser</label>
+      <textarea class="form-control" id="diplomaDetails" formControlName="diplomaDetails" rows="4" placeholder="Zone de texte"></textarea>
+    </div>
+
+    <!-- Nom diplôme/certif -->
+    <div *ngIf="userForm.get('diploma')?.value === 'true'" class="form-group">
+      <label for="diplomaName">Nom diplôme/certif</label>
+      <input type="text" class="form-control" id="diplomaName" formControlName="diplomaName" placeholder="Nom du diplôme ou de la certif qui donne le droit d'exercer comme traducteur + preuve dans les PJ plus tard">
+    </div>
+
+    <!-- Année d'obtention -->
+    <div *ngIf="userForm.get('diploma')?.value === 'true'" class="form-group">
+      <label for="graduationYear">Année d'obtention</label>
+      <input type="number" class="form-control" id="graduationYear" formControlName="graduationYear">
+    </div>
+
+    <!-- Délivré par -->
+    <div *ngIf="userForm.get('diploma')?.value === 'true'" class="form-group">
+      <label for="issuedBy">Délivré par</label>
+      <input type="text" class="form-control" id="issuedBy" formControlName="issuedBy" placeholder="Nom de l'université ou de l'organisme de formation">
+    </div>
+
+    <div *ngIf="userForm.get('diploma')?.value === 'true'" class="form-group">
+      <button type="button" class="btn btn-info" (click)="addAnotherDiploma()">Ajouter une autre formation</button>
+    </div>
+    
+    <!-- Other Diplomas -->
+    <div *ngFor="let diploma of otherDiplomas.controls; let i = index">
+      <h3>Autre formation {{ i + 1 }}</h3>
+    
+      <div class="form-group">
+        <label for="diplomaDetails">Si oui, préciser</label>
+        <textarea class="form-control" id="diplomaDetails" formControlName="{{i}}.diplomaDetails" rows="4" placeholder="Zone de texte"></textarea>
+      </div>
+    
+      <div class="form-group">
+        <label for="diplomaName">Nom diplôme/certif</label>
+        <input type="text" class="form-control" id="diplomaName" formControlName="{{i}}.diplomaName" placeholder="Nom du diplôme ou de la certif qui donne le droit d'exercer comme traducteur + preuve dans les PJ plus tard">
+      </div>
+    
+      <div class="form-group">
+        <label for="graduationYear">Année d'obtention</label>
+        <input type="number" class="form-control" id="graduationYear" formControlName="{{i}}.graduationYear">
+      </div>
+    
+      <div class="form-group">
+        <label for="issuedBy">Délivré par</label>
+        <input type="text" class="form-control" id="issuedBy" formControlName="{{i}}.issuedBy" placeholder="Nom de l'université ou de l'organisme de formation">
+      </div>
+    
+      <button type="button" class="btn btn-danger" (click)="removeDiploma(i)">Supprimer</button>
+    </div>
+
+
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+
+    <!--
+      ****************
+      ****************
+      ****************
+    -->
+
+    <h2>Expérience professionnelle</h2>
+
+    <div *ngFor="let experience of experienceControls.controls; let i = index" class="mb-4">
+      <h3>Expérience {{ i + 1 }}</h3>
+
+      <div class="form-group">
+        <label for="title">Titre</label>
+        <input type="text" class="form-control" id="title" formControlName="{{i}}.title">
+      </div>
+
+      <div class="form-group">
+        <label for="company">Entreprise</label>
+        <input type="text" class="form-control" id="company" formControlName="{{i}}.company">
+      </div>
+
+      <div class="form-group">
+        <label for="startDate">Date de début</label>
+        <input type="date" class="form-control" id="startDate" formControlName="{{i}}.startDate">
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">Date de fin</label>
+        <input type="date" class="form-control" id="endDate" formControlName="{{i}}.endDate">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="{{i}}.description" rows="4"></textarea>
+      </div>
+
+      <button type="button" class="btn btn-danger" (click)="removeExperience(i)">Supprimer</button>
+    </div>
+
+    <button type="button" class="btn btn-info" (click)="addExperience()">Ajouter une expérience</button>
+
+    <!-- Documents requis -->
+    <h2>Documents requis</h2>
+
+    <div *ngFor="let document of documentControls.controls; let i = index" class="mb-4">
+      <h3>Document {{ i + 1 }}</h3>
+
+      <div class="form-group">
+        <label for="documentType">Type de document</label>
+        <input type="text" class="form-control" id="documentType" formControlName="{{i}}.documentType">
+      </div>
+
+      <div class="form-group">
+        <label for="documentName">Nom du document</label>
+        <input type="text" class="form-control" id="documentName" formControlName="{{i}}.documentName">
+      </div>
+
+      <div class="form-group">
+        <label for="file">Fichier</label>
+        <input type="file" class="form-control" id="file" formControlName="{{i}}.file">
+      </div>
+
+      <button type="button" class="btn btn-danger" (click)="removeDocument(i)">Supprimer</button>
+    </div>
+
+    <button type="button" class="btn btn-info" (click)="addDocument()">Ajouter un document</button>
+
+    <!-- Confirmation des informations -->
+    <h2>Confirmation des informations</h2>
+
+    <div formGroupName="confirmation">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="informationAccurate" formControlName="informationAccurate">
+        <label class="form-check-label" for="informationAccurate">
+          Je confirme que les informations renseignées ci-dessus sont exactes et vraies au moment de leur saisie et je reconnais que je m'expose à des sanctions juridiques si jamais elles s'avèrent fausses ou erronées partiellement ou entièrement.
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="acceptTermsAndConditions" formControlName="acceptTermsAndConditions">
+        <label class="form-check-label" for="acceptTermsAndConditions">
+          Je confirme par la présente que j'ai lu et compris et que j'accepte les CGU et la politique de confidentialité de (nom du site/appli)
+        </label>
+      </div>
+    </div>
+
+
+
+    <!-- Bouton de soumission -->
+    <button type="submit" class="btn btn-primary">Soumettre</button>
+  </form>
+</div>

@@ -11,13 +11,14 @@
     padding: 1.5rem 0;
     margin: 0 auto;
     flex-wrap: wrap;
+    font-size: 15px;
 }
   
 .nav-bar__tabs {
     //padding: 25px 15px 15px;
     background: transparent;
-    min-height: 50px;
-    margin-bottom: 20px;
+    //min-height: 50px;
+    //margin-bottom: 20px;
 
     ul {
         list-style: none;
@@ -66,4 +67,9 @@
     font-size: 24px;
     font-weight: bold;
     color: var(--white);
+}
+
+.isLogged {
+    background: var(--black);
+    justify-content: space-around;
 }

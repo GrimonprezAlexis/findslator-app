@@ -6,6 +6,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfilePageComponent } from './pages/profile/profile.component';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { PublicComponent } from './pages/public/public.component';
+import { ExploreComponent } from './pages/explore/explore.component';
+import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 
 //Create a AuthResolver to redirect user on url '/' when is logged
 //The homeComponent must be redirect on app-public or app-private
@@ -21,6 +23,15 @@ const routes: Routes = [
     path: 'public',
     component: PublicComponent,
   },
+  {
+    path: 'explore',
+    component: ExploreComponent,
+  },
+  {
+    path: 'edit-profile',
+    component: ProfileEditComponent,
+  },
+
   { path: 'callback', component: CallbackComponent },
   { path: '**', component: NotFoundComponent }, // Redirect to the home page for any unknown routes
 ];

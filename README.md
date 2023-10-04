@@ -33,3 +33,36 @@ export const environment = {
 };
 `
 
+
+
+
+
+We are on the ProfilePageComponent this page show buttons example
+            <div>
+              <button type="button" (click)="openModalEditProfile()">Editer le profile</button>
+            </div>
+
+              <div>
+              <button type="button" (click)="openModalExploreOffer()">Explorer les offres</button>
+            </div>
+
+
+L'objectif est d'avoir un composant modal generic réutilisable qui va ouvrir une modal avec en contenu un composant dynamic (donné dans la method du clique avec des paramétrès) lorsque l'utilisateur va cliquer 
+
+Pour exemple quand je clique sur le bouton openModalEditProfile cela va ouvrir le composant modalGeneric avec le contenu de la page ProfileEditComponent.
+
+Si je clique sur openModalExploreOffer cela va ouvrir le composant modalGeneric avec le contenu de la page ExplorerComponent.
+Fournit moi le code permettant de faire cela en Angular / SCSS la modal generic doit être complète. Use factory if require but the most simple way to do this
+
+  this._modalService.openModal(
+   const data = {title: ''Éditer le profil", ...}
+    this._modalService.openModal(ProfileEditComponent, data)
+  }
+
+  openModalExploreOffer() {
+   const data = {title: ''Explorer les offres", ...}
+    this._modalService.openModal(ExploreComponent, data)
+  } 
+
+
+Provide me a complete code / service / modal / usage

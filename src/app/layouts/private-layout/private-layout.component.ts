@@ -6,12 +6,13 @@ import { Component } from '@angular/core';
     <div class="private-layout">
       <app-menu></app-menu>
 
-      <div class="private-layout__content">
+      <div class="container">
         <ng-content></ng-content>
       </div>
 
       <app-footer></app-footer>
     </div>
   `,
+  styleUrls: ['./private-layout.component.scss'],
 })
 export class PrivateLayoutComponent {}

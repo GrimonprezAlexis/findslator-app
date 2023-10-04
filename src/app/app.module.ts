@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FadeInDirective } from './_core/directives/fadeIn.directive';
 import { AppComponent } from './app.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from './components/alert/alert.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,8 +22,11 @@ import { HowtoComponent } from './components/howto/howto.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { UserFeatureComponent } from './components/user-feature/user-feature.component';
 import { PrivateLayoutComponent } from './layouts/private-layout/private-layout.component';
+import { ExploreComponent } from './pages/explore/explore.component';
 import { HomePageComponent } from './pages/home/home.component';
+import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 import { ProfilePageComponent } from './pages/profile/profile.component';
 
 @NgModule({
@@ -45,6 +49,12 @@ import { ProfilePageComponent } from './pages/profile/profile.component';
     LoaderComponent,
     MenuComponent,
     NotFoundComponent,
+    UserFeatureComponent,
+    ExploreComponent,
+
+    //Form Profile
+    ProfileEditComponent,
+
     //Directive
     FadeInDirective,
   ],
@@ -63,6 +73,7 @@ import { ProfilePageComponent } from './pages/profile/profile.component';
         ],
       },
     }),
+    ReactiveFormsModule,
   ],
   providers: [
     {

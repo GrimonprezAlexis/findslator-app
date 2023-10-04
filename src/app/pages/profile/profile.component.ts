@@ -4,10 +4,13 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { HelperService } from '../../_core/services/helper.service';
 import { UserService } from '../../_core/services/user.service';
 import { UserAuth, UserProfile, UserRole } from '../../_core/types/user.type';
+import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
+import { ExploreComponent } from '../explore/explore.component';
 
 @Component({
   selector: 'app-profile-oage',
   templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfilePageComponent implements OnInit {
   title = 'Decoded ID Token';
@@ -16,6 +19,16 @@ export class ProfilePageComponent implements OnInit {
     (sessionStorage.getItem('userRole') as UserRole) || 'both';
   successMessage!: string;
   errorMessage!: string;
+
+  modalState: any = { show: false, options: null };
+
+  openModal() {}
+
+  // openModal() {
+  //   this.modalOpen = true;
+  //   this.dynamicComponent =
+  //     this._resolver.resolveComponentFactory(ExploreComponent);
+  // }
 
   constructor(
     private _authService: AuthService,
@@ -67,5 +80,15 @@ export class ProfilePageComponent implements OnInit {
 
   getUserLastUpdated(user: UserAuth<UserProfile>) {
     return this._helperService.formatDate(user.updated_at);
+  }
+
+  openModalEditProfile() {
+    const data = { title: 'Éditer le profil' };
+    //this._modalService.openModal(ProfileEditComponent, data);
+  }
+
+  openModalExploreOffer() {
+    const data = { title: 'Explorer les offres' };
+    // this._modalService.openModal(ExploreComponent, data);
   }
 }
