@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { catchError, switchMap } from 'rxjs/operators';
+import { ModalService } from 'src/app/_core/services/modal.service';
 import { HelperService } from '../../_core/services/helper.service';
 import { UserService } from '../../_core/services/user.service';
 import { UserAuth, UserProfile, UserRole } from '../../_core/types/user.type';
-import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 import { ExploreComponent } from '../explore/explore.component';
+import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 
 @Component({
   selector: 'app-profile-oage',
@@ -20,8 +21,6 @@ export class ProfilePageComponent implements OnInit {
   successMessage!: string;
   errorMessage!: string;
 
-  modalState: any = { show: false, options: null };
-
   openModal() {}
 
   // openModal() {
@@ -33,7 +32,9 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
-    private _helperService: HelperService
+    private _helperService: HelperService,
+    public modalService: ModalService,
+    private _resolver: ComponentFactoryResolver
   ) {}
 
   //After Auth0 login
@@ -82,13 +83,13 @@ export class ProfilePageComponent implements OnInit {
     return this._helperService.formatDate(user.updated_at);
   }
 
-  openModalEditProfile() {
-    const data = { title: 'Éditer le profil' };
-    //this._modalService.openModal(ProfileEditComponent, data);
+  public modal$ = this.modalService.modal$;
+
+  openExplorerInModal() {
+    this.modalService.openModal(ExploreComponent);
   }
 
-  openModalExploreOffer() {
-    const data = { title: 'Explorer les offres' };
-    // this._modalService.openModal(ExploreComponent, data);
+  openProfileInModal() {
+    this.modalService.openModal(ProfileEditComponent);
   }
 }

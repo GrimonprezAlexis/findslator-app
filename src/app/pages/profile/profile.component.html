@@ -1,9 +1,9 @@
 <app-alert *ngIf="successMessage" type="success" [message]="successMessage"></app-alert>
 <app-alert *ngIf="errorMessage" type="error" [message]="errorMessage"></app-alert>
 
-  <!-- <app-modal [component]="dynamicComponent" [data]="modalData" [isOpen]="modalOpen"></app-modal> -->
-  <!-- <app-modal [isOpen]="modalOpen"></app-modal> -->
-
+<ng-container *ngIf="modal$ | async as modalComponent">
+  <app-modal-generic [content]="modalComponent"></app-modal-generic>
+</ng-container>
 
 <app-private-layout>
     <div class="">
@@ -42,12 +42,12 @@
           <h2 class="auth0-features__title">Explorer vos fonctionnalités</h2>
 
            <div>
-              <button type="button" (click)="openModalEditProfile()">Edit Profile</button>
+              <button type="button" (click)="openExplorerInModal()">Edit Profile</button>
             </div>
   
 
             <div>
-              <button type="button" (click)="openModalExploreOffer()">Explorer Offert</button>
+              <button type="button" (click)="openProfileInModal()">Explorer Offert</button>
             </div>
   
 

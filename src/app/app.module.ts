@@ -28,10 +28,13 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { HomePageComponent } from './pages/home/home.component';
 import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 import { ProfilePageComponent } from './pages/profile/profile.component';
+import { ModalService } from './_core/services/modal.service';
+import { ModalGenericComponent } from './components/modal-generic/modal-generic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ModalGenericComponent,
 
     //Page
     HomePageComponent,
@@ -76,6 +79,7 @@ import { ProfilePageComponent } from './pages/profile/profile.component';
     ReactiveFormsModule,
   ],
   providers: [
+    ModalService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
