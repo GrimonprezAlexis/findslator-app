@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environnements/environnement';
-import { UserAuth, UserProfile } from '../types/user.type';
+import { User, UserAuth, UserProfile } from '../types/user.type';
 import { PostUserResponse, UserApiResponse } from '../types/api.type';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -16,11 +16,11 @@ export class UserService {
 
   private readonly USER_COOKIE_KEY = 'user_data';
 
-  setUser(user: any): void {
+  setUser(user: User<UserProfile> | UserAuth<UserProfile>): void {
     this.cookieService.set(this.USER_COOKIE_KEY, JSON.stringify(user));
   }
 
-  getUser(): any {
+  getUser(): User<UserProfile> | UserAuth<UserProfile> {
     const userCookie = this.cookieService.get(this.USER_COOKIE_KEY);
     return userCookie ? JSON.parse(userCookie) : null;
   }
@@ -74,12 +74,18 @@ export class UserService {
       );
   }
 
-  updateUser(user: UserAuth<UserProfile>): Observable<any> {
+  //Add email type any quick fix
+  updateUser(email: any, user: User<UserProfile>): Observable<any> {
+    const body = { email, user };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
-      .post<UserApiResponse<any>>(`${baseUrl}/user/update`, user, {
-        headers,
-      })
+      .post<UserApiResponse<any>>(
+        `${baseUrl}/user/update`,
+        { email, updatedObject: body },
+        {
+          headers,
+        }
+      )
       .pipe(
         map((response) => response.user),
         catchError((error) => {

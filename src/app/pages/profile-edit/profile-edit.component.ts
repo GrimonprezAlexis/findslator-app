@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError } from 'rxjs';
 import { UserService } from 'src/app/_core/services';
-import { UserAuth, UserProfile } from 'src/app/_core/types';
+import { User, UserAuth, UserProfile } from 'src/app/_core/types';
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,7 +12,6 @@ import { UserAuth, UserProfile } from 'src/app/_core/types';
 export class ProfileEditComponent implements OnInit {
   userForm!: FormGroup;
   currentStep: number = 1;
-  user!: UserAuth<UserProfile>;
 
   steps: string[] = [
     'Informations personnelles',
@@ -22,30 +22,33 @@ export class ProfileEditComponent implements OnInit {
     'Confirmation des informations',
   ];
 
-  constructor(private fb: FormBuilder, private _userService: UserService) {}
+  successMessage!: string;
+  errorMessage!: string;
+
+  constructor(private fb: FormBuilder, public userService: UserService) {}
 
   ngOnInit() {
-    this.user = this._userService.getUser();
-    console.log('>> user from profile edit', this.user);
-
     this.userForm = this.fb.group({
       // ... Informations personnel ...
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
-      photo: [''],
-      email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])'
-          ),
-        ],
+      picture: [this.userService.getUser().picture], //todo if require
+      email: [
+        this.userService.getUser().email,
+        [Validators.required, Validators.email],
       ],
+      // password: [
+      //   '',
+      //   [
+      //     Validators.required,
+      //     Validators.minLength(8),
+      //     Validators.pattern(
+      //       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])'
+      //     ),
+      //   ],
+      // ],
       gender: ['', Validators.required],
-      nationality: ['', Validators.required],
+      nationality: [''],
       countryOfResidence: ['', Validators.required],
       city: [''],
       linkedin: [''],
@@ -62,10 +65,10 @@ export class ProfileEditComponent implements OnInit {
       specializations: [''],
       translationTools: [''],
       translationToolsDetails: [''],
-      pricing: this.fb.array([]),
+      tariffs: this.fb.array([]),
 
       // ... Cursus
-      diploma: ['false'],
+      hasDiploma: ['false', Validators.required],
       diplomaDetails: [''],
       diplomaName: [''],
       graduationYear: [''],
@@ -73,49 +76,45 @@ export class ProfileEditComponent implements OnInit {
       otherDiplomas: this.fb.array([]),
 
       // ... Experiences professionnel ...
-      experience: this.fb.array([]),
+      experiences: this.fb.array([]),
       documents: this.fb.array([]),
       confirmation: this.fb.group({
         informationAccurate: [false, Validators.requiredTrue],
         acceptTermsAndConditions: [false, Validators.requiredTrue],
       }),
     });
-    //this.addPrice();
-    //this.addExperience();
-    //this.addDocument();
   }
 
   nextStep(step: number) {
     this.currentStep = step;
   }
 
-  get pricingControls() {
-    return (this.userForm.get('pricing') as FormArray).controls;
+  get tariffs() {
+    return this.userForm.get('tariffs') as FormArray;
   }
 
   // Helper method to add a pricing entry
   addPrice() {
-    const pricingArray = this.userForm.get('pricing') as FormArray;
-    if (pricingArray) {
-      pricingArray.push(
-        this.fb.group({
-          service: [''],
-          unit: [''],
-          price: [''],
-          currency: [''],
-          minPrice: [''],
-        })
-      );
-    }
+    const tariffFormGroup = this.fb.group({
+      service: ['', Validators.required],
+      unit: ['', Validators.required],
+      price: [0, Validators.required],
+      currency: ['', Validators.required],
+      minPrice: [0, Validators.required],
+    });
+    this.tariffs.push(tariffFormGroup);
   }
 
   removePrice(index: number) {
-    const pricingArray = this.userForm.get('pricing') as FormArray;
-    if (pricingArray) {
-      pricingArray.removeAt(index);
-    }
+    this.tariffs.removeAt(index);
   }
 
+  /**
+   *
+   * DIPLOMES
+   *
+   *
+   */
   get otherDiplomas() {
     return this.userForm.get('otherDiplomas') as FormArray;
   }
@@ -134,26 +133,38 @@ export class ProfileEditComponent implements OnInit {
     this.otherDiplomas.removeAt(index);
   }
 
-  get experienceControls() {
-    return this.userForm.get('experience') as FormArray;
+  /**
+   *
+   * EXPERIENCES
+   *
+   *
+   */
+  get experiences() {
+    return this.userForm.get('experiences') as FormArray;
   }
 
   addExperience() {
-    this.experienceControls.push(
-      this.fb.group({
-        title: [''],
-        company: [''],
-        startDate: [''],
-        endDate: [''],
-        description: [''],
-      })
-    );
+    const experienceFormGroup = this.fb.group({
+      title: ['', Validators.required],
+      company: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      description: ['', Validators.required],
+    });
+
+    this.experiences.push(experienceFormGroup);
   }
 
   removeExperience(index: number) {
-    this.experienceControls.removeAt(index);
+    this.experiences.removeAt(index);
   }
 
+  /**
+   *
+   * DOCUMENTS
+   *
+   *
+   */
   get documentControls() {
     return this.userForm.get('documents') as FormArray;
   }
@@ -176,30 +187,21 @@ export class ProfileEditComponent implements OnInit {
     if (this.userForm.valid) {
       // Traitement des données du formulaire
       console.log(this.userForm.value);
+      this.AddUserInfo(this.userForm.value);
     }
   }
 
-  private AddUserInfo() {
-    //Add Form info and update the user by _id from this.user._id
-    // return this._userService.getUser('email', response?.email).pipe(
-    //   catchError((error) => {
-    //     console.error('Error:', error);
-    //     const newUser: UserAuth<undefined> = {
-    //       roles: [this.userRole],
-    //       email: response?.email,
-    //       picture: response?.picture,
-    //       auth0Id: response?.sub,
-    //       updated_at:
-    //         response?.updated_at || this._helperService.getCurrentISODate(),
-    //     };
-    //     return this._userService
-    //       .createUser(newUser)
-    //       .pipe(
-    //         switchMap((response) =>
-    //           this._userService.getUser('id', response.insertedId)
-    //         )
-    //       );
-    //   })
-    // );
+  //Add Form info and update the user by _id from this.user._id
+  private AddUserInfo(userFormValue: User<UserProfile>) {
+    if (this.userService.getUser().auth0Id) {
+      const auth0Id = this.userService.getUser().auth0Id;
+      return this.userService.updateUser(auth0Id, userFormValue);
+    } else {
+      //Add error from modal
+      //With success and error
+      console.error('Error creating user:');
+      this.errorMessage = 'Error updating user. Please try again.';
+      return null;
+    }
   }
 }

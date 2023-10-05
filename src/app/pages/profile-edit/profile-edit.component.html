@@ -1,5 +1,8 @@
 <div class="container">
+  <app-alert *ngIf="successMessage" type="success" [message]="successMessage"></app-alert>
+  <app-alert *ngIf="errorMessage" type="error" [message]="errorMessage"></app-alert>
 
+  
   <nav class="breadcrumb mb-2" aria-label="breadcrumb">
     <ul class="breadcrumb-list">
       <ng-container *ngFor="let step of steps; let i = index">
@@ -35,7 +38,11 @@
       <!-- Photo/logo -->
       <div class="form-group">
         <label for="title">Photo/logo</label>
-        <input type="file" class="form-control" id="photo" formControlName="photo">
+
+        <br>
+        <img [src]="userService.getUser().picture" alt="Photo/Logo" width="30px" height="30px" />
+
+        <input type="file" class="form-control" id="picture" formControlName="picture">
       </div>
   
   
@@ -55,8 +62,8 @@
       <div class="form-group">
         <label for="gender">Sexe</label>
         <select class="form-control" id="gender" formControlName="gender">
-          <option value="male">Homme</option>
-          <option value="female">Femme</option>
+          <option value="men">Homme</option>
+          <option value="women">Femme</option>
           <option value="other">Autre</option>
         </select>
       </div>
@@ -196,40 +203,75 @@
       
       <!-- Tarifs -->
       <div class="form-group">
-        <label for="pricing">Tarifs</label>
-        <div formArrayName="pricing">
-          <div *ngFor="let price of pricingControls; let i = index" class="input-group mb-2">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Service</span>
+        <h4>Tarifs</h4>
+        <div formArrayName="tariffs">
+          <div *ngFor="let tariff of tariffs.controls; let i = index" class="input-group mb-2">
+            <h5>Services {{ i + 1 }}</h5>
+            
+            <div [formGroupName]="i">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Service</span>
+              </div>
+              <select 
+                class="form-control" 
+                [id]="'service' + i"  
+                formControlName="service"
+              >
+                <option value="service1">Traduction générale</option>
+                <option value="service2">Traduction technique</option>
+                <option value="service2">Traduction littéraire</option>
+                <option value="service2">Traduction assermentée</option>
+                <option value="service2">Interprétation</option>
+                <option value="service2">Post-édition</option>
+                <option value="service2">Relecture</option>
+                <option value="service2">Révision</option>
+                <option value="service2">Gestion de projet</option>
+                <option value="service2">Expertise TAO</option>
+                <option value="service2">Expertise QA</option>
+                <option value="service2">Expertise PAO</option>
+                <option value="service2">Transcréation</option>
+                <option value="service2">Transcription</option>
+                <option value="service2">Rédaction technique</option>
+                <option value="service2">Rédaction web</option>
+                <option value="service2">Copywriting</option>
+                <option value="service2">Alignement</option>
+                <option value="service2">Terminologie</option>
+                <option value="service2">Autres</option>
+                <!-- Ajoutez d'autres options au besoin -->
+              </select>
+  
+              <div class="input-group-prepend">
+                <span class="input-group-text">Unité</span>
+              </div>
+              <select class="form-control" [id]="'unit' + i"  formControlName="unit">
+                <option value="source word">Mot source</option>
+                <option value="target word">Mot cible</option>
+                <option value="hour">Heure</option>
+                <option value="page">Page</option>
+                <option value="day">Jour</option>
+              </select>
+              
+              <div class="input-group-prepend">
+                <span class="input-group-text">Prix</span>
+              </div>
+              <input type="number" class="form-control" formControlName="price">
+  
+              <div class="input-group-prepend">
+                <span class="input-group-text">Devise</span>
+              </div>
+              <select class="form-control" [id]="'currency' + i" formControlName="currency">
+                <option value="currency1">Devise 1</option>
+                <option value="currency2">Devise 2</option>
+                <!-- Ajoutez d'autres options au besoin -->
+              </select>
+  
+              <div class="input-group-prepend">
+                <span class="input-group-text">Tarif minimum</span>
+              </div>
+              <input type="number" class="form-control" formControlName="minPrice">
             </div>
-            <select class="form-control" [formControlName]="i">
-              <option value="service1">Service 1</option>
-              <option value="service2">Service 2</option>
-              <!-- Ajoutez d'autres options au besoin -->
-            </select>
-            <div class="input-group-prepend">
-              <span class="input-group-text">Unité</span>
-            </div>
-            <select class="form-control" [formControlName]="i">
-              <option value="source word">Mot source</option>
-              <option value="target word">Mot cible</option>
-              <option value="hour">Heure</option>
-              <option value="page">Page</option>
-              <option value="day">Jour</option>
-            </select>
-            <input type="number" class="form-control" [formControlName]="i">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Devise</span>
-            </div>
-            <select class="form-control" [formControlName]="i">
-              <option value="currency1">Devise 1</option>
-              <option value="currency2">Devise 2</option>
-              <!-- Ajoutez d'autres options au besoin -->
-            </select>
-            <div class="input-group-prepend">
-              <span class="input-group-text">Tarif minimum</span>
-            </div>
-            <input type="number" class="form-control" [formControlName]="i">
+
+
             <div class="input-group-append">
               <button class="btn btn-danger" (click)="removePrice(i)">Supprimer</button>
             </div>
@@ -254,9 +296,13 @@
       <h3>{{steps[2]}}</h3>
 
       <!-- Formation diplomante/certifiante -->
+      <div class="well">
+        Si Oui, suite; si Non, fin du processus et suppression du compte
+      </div>
+      
       <div class="form-group">
-        <label for="diploma">Formation diplomante/certifiante</label>
-        <select class="form-control" id="diploma" formControlName="diploma">
+        <label for="hasDiploma">Formation diplomante/certifiante</label>
+        <select class="form-control" id="hasDiploma" formControlName="hasDiploma">
           <option value="true">Oui</option>
           <option value="false">Non</option>
         </select>
@@ -331,39 +377,36 @@
     <div class="step step4" *ngIf="currentStep == 4">
       <h3>{{steps[3]}}</h3>
 
-      <div *ngFor="let experience of experienceControls.controls; let i = index" class="mb-4">
-        <h3>Expérience {{ i + 1 }}</h3>
-  
-        <div class="form-group">
-          <label for="title">Titre</label>
-          <input type="text" class="form-control" id="title" formControlName="{{i}}.title">
+      <div formArrayName="experiences">
+        <div *ngFor="let experience of experiences.controls; let i = index">
+          <h3>Expérience {{ i + 1 }}</h3>
+
+          <div [formGroupName]="i">
+            <div class="form-group">
+              <label for="title{{i}}">Title</label>
+              <input type="text" class="form-control" [id]="'title' + i" formControlName="title">
+            </div>
+            <div class="form-group">
+              <label for="company{{i}}">Company</label>
+              <input type="text" class="form-control" [id]="'company' + i" formControlName="company">
+            </div>
+            <div class="form-group">
+              <label for="startDate{{i}}">Start Date</label>
+              <input type="date" class="form-control" [id]="'startDate' + i" formControlName="startDate">
+            </div>
+            <div class="form-group">
+              <label for="endDate{{i}}">End Date</label>
+              <input type="date" class="form-control" [id]="'endDate' + i" formControlName="endDate">
+            </div>
+            <div class="form-group">
+              <label for="description{{i}}">Description</label>
+              <textarea class="form-control" [id]="'description' + i" formControlName="description"></textarea>
+            </div>
+          </div>
+          <button type="button" (click)="removeExperience(i)" class="btn btn-danger">Supprimer</button>
         </div>
-  
-        <div class="form-group">
-          <label for="company">Entreprise</label>
-          <input type="text" class="form-control" id="company" formControlName="{{i}}.company">
-        </div>
-  
-        <div class="form-group">
-          <label for="startDate">Date de début</label>
-          <input type="date" class="form-control" id="startDate" formControlName="{{i}}.startDate">
-        </div>
-  
-        <div class="form-group">
-          <label for="endDate">Date de fin</label>
-          <input type="date" class="form-control" id="endDate" formControlName="{{i}}.endDate">
-        </div>
-  
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control" id="description" formControlName="{{i}}.description" rows="4"></textarea>
-        </div>
-  
-        <button type="button" class="btn btn-danger" (click)="removeExperience(i)">Supprimer</button>
       </div>
-  
-      <button type="button" class="btn btn-info" (click)="addExperience()">Ajouter une expérience</button>
-  
+      <button type="button" (click)="addExperience()" class="btn btn-info">Ajouter</button>  
       <button type="button" class="btn btn-primary" (click)="nextStep(5)">Étape Suivante</button>  
     </div>
 

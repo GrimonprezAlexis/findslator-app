@@ -25,30 +25,32 @@ export class ProfilePageComponent implements OnInit {
     private _authService: AuthService,
     private _userService: UserService,
     private _helperService: HelperService,
-    public modalService: ModalService,
-    private _resolver: ComponentFactoryResolver
+    public modalService: ModalService
   ) {}
 
   //After Auth0 login
   //Check if user exist with email if exists return user
   //Else create user with Auth0 Login info and return user
   ngOnInit(): void {
-    this._authService.user$
-      .pipe(switchMap((auth0User) => this.checkAndCreateUser(auth0User)))
-      .subscribe({
-        next: (user: UserAuth<UserProfile>) => {
-          this.successMessage = `Welcome ${user.email}`;
-          this.user = user;
+    this.user = this._userService.getUser();
+    if (!this.user) {
+      this._authService.user$
+        .pipe(switchMap((auth0User) => this.checkAndCreateUser(auth0User)))
+        .subscribe({
+          next: (user: UserAuth<UserProfile>) => {
+            this.successMessage = `Welcome ${user.email}`;
+            this.user = user;
 
-          console.log('>> profileComponent', this.user);
-          //Store in cache the user to use inside another component
-          this._userService.setUser(user);
-        },
-        error: (error) => {
-          console.error('Error creating user:', error);
-          this.errorMessage = 'Error creating user. Please try again.';
-        },
-      });
+            console.log('>> profileComponent', this.user);
+            //Store in cache the user to use inside another component
+            this._userService.setUser(user);
+          },
+          error: (error) => {
+            console.error('Error creating user:', error);
+            this.errorMessage = 'Error creating user. Please try again.';
+          },
+        });
+    }
   }
 
   private checkAndCreateUser(response: User | null | undefined) {
